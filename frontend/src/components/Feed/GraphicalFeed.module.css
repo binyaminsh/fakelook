@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  height: 90vh;
+}
+
+.controls {
+  width: 22%;
+  padding: 1rem;
+  background-color: #14161a;
+  color: #fff;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+}

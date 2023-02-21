@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-gce
+  annotations:
+    networking.gke.io/managed-certificates: managed-cert
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+    - host: fakelook.net
+      http:
+        paths:
+          - path: /auth/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth-srv
+                port:
+                  number: 5000
+          - path: /identity/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: identity-srv
+                port:
+                  number: 5001
+          - path: /post/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: post-srv
+                port:
+                  number: 5002
+          - path: /socket.io/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: feed-srv
+                port:
+                  number: 5003
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000

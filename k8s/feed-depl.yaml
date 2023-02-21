@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feed
+  template:
+    metadata:
+      labels:
+        app: feed
+    spec:
+      containers:
+        - name: feed
+          image: bshraib/fakelook-feed
+          env:
+            - name: DATA_BASE_URL
+              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/feed?retryWrites=true&w=majority"
+            - name: TOKEN_SECRET
+              value: "veryverysecretkey"
+            - name: AMQP_SERVER
+              value: "amqps://tmijedaz:trbSZmGtbG81P1YgQZ4ch4iL9vAfq82o@goose.rmq2.cloudamqp.com/tmijedaz"
+            - name: "NODE_CONFIG_DIR"
+              value: "/app/src/config/"
+          readinessProbe:
+            httpGet:
+              path: "/health-check"
+              port: 5003
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-srv
+spec:
+  selector:
+    app: feed
+  ports:
+    - name: feed
+      protocol: TCP
+      port: 5003
+      targetPort: 5003

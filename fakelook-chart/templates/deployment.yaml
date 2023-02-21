@@ -1,0 +1,156 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authservice
+spec:
+  selector:
+    matchLabels:
+      app: authservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: authservice
+    spec:
+      containers:
+        - name: auth
+          image: bshraib/fakelook-auth:1.0.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+            - name: IDENTITY_SERVICE
+              value: "http://identity-service:5001"
+            - name: DATA_BASE_URL
+              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/auth?retryWrites=true&w=majority"
+            - name: TOKEN_SECRET
+              value: "veryverysecretkey"
+            - name: FRONTEND_SERVICE
+              value: "http://frontend-service:3000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identityservice
+spec:
+  selector:
+    matchLabels:
+      app: identityservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: identityservice
+    spec:
+      containers:
+        - name: identity
+          image: bshraib/fakelook-identity:1.0.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: AUTH_SERVICE
+              value: "http://auth-service:5000"
+            - name: URL_DB_CONECTION
+              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/identity?retryWrites=true&w=majority"
+            - name: TOKEN_SECRET
+              value: "veryverysecretkey"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feedservice
+spec:
+  selector:
+    matchLabels:
+      app: feedservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: feedservice
+    spec:
+      containers:
+        - name: feed
+          image: bshraib/fakelook-feed:1.0.0
+          ports:
+            - containerPort: 5003
+          env:
+            - name: DATA_BASE_URL
+              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/feed?retryWrites=true&w=majority"
+            - name: TOKEN_SECRET
+              value: "veryverysecretkey"
+            - name: AMQP_SERVER
+              value: "amqps://tmijedaz:trbSZmGtbG81P1YgQZ4ch4iL9vAfq82o@goose.rmq2.cloudamqp.com/tmijedaz"
+            - name: "NODE_CONFIG_DIR"
+              value: "/app/src/config/"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postservice
+spec:
+  selector:
+    matchLabels:
+      app: postservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postservice
+    spec:
+      containers:
+        - name: post
+          image: bshraib/fakelook-post:1.0.0
+          ports:
+            - containerPort: 5002
+          env:
+            - name: DATA_BASE_URL
+              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/post?retryWrites=true&w=majority"
+            - name: TOKEN_SECRET
+              value: "veryverysecretkey"
+            - name: STORAGE_CONNECTION_STRING
+              value: "DefaultEndpointsProtocol=https;AccountName=fakelookstoragenew;AccountKey=592PvRcXFUM/aNxU8VaqsRWJbb3l15Vg5TPdX4K6EjCruPKGzP8x8oHl/NYWcah+jQc8set3Ux2T+AStBedNXQ==;EndpointSuffix=core.windows.net"
+            - name: STORAGE_URL
+              value: "https://fakelookstoragenew.blob.core.windows.net/public/"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: bshraib/fakelook-frontend:1.0.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_GOOGLE_KEY
+              value: "889021578009-t8fvpr0sjhh6vo93doo6136q9b4kmhot.apps.googleusercontent.com"
+            - name: REACT_APP_GOOGLE_SECRET
+              value: "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"
+            - name: REACT_APP_GOOGLE_MAPS_API_KEY
+              value: "AIzaSyDbVymsiMKubuNrmy_RbT4owOMia4Bifgk"
+            - name: REACT_APP_AUTH_URL
+              value: "http://auth-service:5000/auth"
+            - name: REACT_APP_IDENTITY_URL
+              value: "http://identity-service:5001/identity"
+            - name: REACT_APP_POST_URL
+              value: "http://post-service:5002/post"
+            - name: REACT_APP_POSTS_URL
+              value: "http://post-service:5002/posts"
+            - name: REACT_APP_FEED_SOCKET_URL
+              value: "http://feed-service:5003"
+            - name: REACT_APP_RESET_PASSWORD_URL
+              value: "http://auth-service:5000/auth/requestResetPassword"
+            - name: REACT_APP_IDENTITY_UPDATEUSER_URL
+              value: "http://identity-service:5001/identity/updateUser"

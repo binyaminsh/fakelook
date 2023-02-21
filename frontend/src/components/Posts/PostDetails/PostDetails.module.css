@@ -1,0 +1,73 @@
+.modal {
+  width: 60vw;
+  left: calc(25% - 5rem);
+  top: 4vh;
+  background-color: #242424;
+  max-height: 100%;
+  height: calc(100% - 4rem);
+}
+
+.post {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.card {
+  background-color: #242424;
+}
+
+.publisher {
+  font-size: 15px;
+}
+
+.publisher .name {
+  font-weight: bold;
+  opacity: 1;
+}
+
+.publisher span {
+  opacity: 0.5;
+}
+
+.postImg {
+  margin-top: 0.5rem;
+  width: 100%;
+  max-height: 650px;
+  object-fit: contain;
+}
+
+.imgCaption {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.tags {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+
+.tags button {
+  background-color: transparent;
+  border: none;
+  padding: 0.15rem 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.tags button:hover {
+  background-color: transparent;
+  color: orange;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  width: 75%;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.addComment {
+  color: #56922c;
+}

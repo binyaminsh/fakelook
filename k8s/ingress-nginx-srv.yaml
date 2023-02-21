@@ -1,0 +1,56 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    # nginx.org/websocket-services: "feed-srv"
+spec:
+  rules:
+    - host: fakelook.net
+      http:
+        paths:
+          - path: /auth/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-srv
+                port:
+                  number: 5000
+          - path: /identity/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: identity-srv
+                port:
+                  number: 5001
+          # - path: /posts/?(.*)/comments
+          - path: /post/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: post-srv
+                port:
+                  number: 5002
+          # - path: /feed/?(.*)
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: feed-srv
+          #       port:
+          #         number: 5003
+          - path: /socket.io/.*
+            pathType: Prefix
+            backend:
+              service:
+                name: feed-srv
+                port:
+                  number: 5003
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000

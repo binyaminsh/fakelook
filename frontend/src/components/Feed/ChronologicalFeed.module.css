@@ -1,0 +1,13 @@
+.feed-container {
+  width: 22%;
+  padding: 0.5rem;
+  background-color: #14161a;
+  color: #fff;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+}
+
+.card {
+  color: #14161a;
+}

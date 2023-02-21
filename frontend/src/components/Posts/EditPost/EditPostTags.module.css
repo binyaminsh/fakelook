@@ -1,0 +1,62 @@
+.container {
+  margin: 1rem auto;
+  width: 75%;
+}
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  margin-bottom: 0.5rem;
+}
+
+.control input,
+.control textarea {
+  font: inherit;
+  padding: 0.35rem;
+  width: 100%;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.actions button {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+}
+
+.actions button:hover {
+  background-color: #6e6e6e;
+  border-color: #6e6e6e;
+  color: #fcb66b;
+}
+
+.actions button[type="button"] {
+  background-color: transparent;
+  color: white;
+}
+
+.actions button[type="button"]:hover {
+  color: #fcb66b;
+}
+
+.actions button:disabled {
+  background-color: #a2a1a1;
+  color: #515151;
+}
+
+.actions button[type="button"]:disabled {
+  color: #515151;
+  background-color: transparent;
+}

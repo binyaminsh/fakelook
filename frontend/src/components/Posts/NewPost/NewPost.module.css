@@ -1,0 +1,99 @@
+.container {
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 40rem;
+  background-color: #49475b;
+}
+
+.modal {
+  top: 10vh;
+  max-height: 90%;
+}
+
+.form {
+  position: relative;
+  color: whitesmoke;
+}
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.control input,
+.control textarea {
+  font: inherit;
+  padding: 0.35rem;
+  border-radius: 4px;
+  background-color: #49475b;
+  /* border: 1px solid #c1d1d1; */
+  color: whitesmoke;
+  display: block;
+  width: 100%;
+  font-size: 1.25rem;
+}
+
+.mention {
+  position: relative;
+}
+
+.control input:focus,
+.control textarea:focus {
+  /* background-color: #cbf8f8; */
+  outline-color: black;
+  outline-width: 0px;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.actions button {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: #2a2a2a;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+}
+
+.actions button:hover {
+  background-color: #6e6e6e;
+  border-color: #6e6e6e;
+  color: #fcb66b;
+}
+
+.actions button[type="button"] {
+  background-color: transparent;
+  color: white;
+}
+
+.actions button[type="button"]:hover {
+  color: #fcb66b;
+}
+
+.actions button:disabled {
+  background-color: #a2a1a1;
+  color: #515151;
+}
+
+.actions button[type="button"]:disabled {
+  color: #515151;
+  background-color: transparent;
+}
+
+.preview {
+  height: 300px;
+  width: 500px;
+  object-fit: contain;
+}

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: client
+          image: bshraib/fakelook-frontend
+          env:
+            - name: REACT_APP_GOOGLE_KEY
+              value: "889021578009-t8fvpr0sjhh6vo93doo6136q9b4kmhot.apps.googleusercontent.com"
+            - name: REACT_APP_GOOGLE_SECRET
+              value: "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"
+            - name: REACT_APP_GOOGLE_MAPS_API_KEY
+              value: "AIzaSyDbVymsiMKubuNrmy_RbT4owOMia4Bifgk"
+            - name: REACT_APP_AUTH_URL
+              value: "https://fakelook.net/auth"
+            - name: REACT_APP_IDENTITY_URL
+              value: "https://fakelook.net/identity"
+            - name: REACT_APP_POST_URL
+              value: "https://fakelook.net/post"
+            - name: REACT_APP_POSTS_URL
+              value: "https://fakelook.net/posts"
+            - name: REACT_APP_FEED_SOCKET_URL
+              value: "/feed"
+            - name: REACT_APP_RESET_PASSWORD_URL
+              value: "https://fakelook.net/auth/requestResetPassword"
+            - name: REACT_APP_IDENTITY_UPDATEUSER_URL
+              value: "https://fakelook.net/identity/updateUser"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv
+spec:
+  selector:
+    app: client
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

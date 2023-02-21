@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  height: 90vh;
+}
+
+.controls {
+  width: 22%;
+  padding: 1rem;
+  background-color: #14161a;
+  color: #fff;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+}
+
+.controls input {
+  border: none;
+}
+
+.map {
+  width: 80%;
+  height: 90vh;
+}
+
+.map-container {
+  width: 100%;
+  height: 90vh;
+  border-radius: 0.4rem;
+}
+
+.info-window {
+  color: #14161a;
+}
+
+.info-window .name {
+  font-weight: bold;
+}
+
+.info-window .content {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.info-window p {
+  font-size: 15px;
+}
+
+.info-window img {
+  max-width: 700px;
+  max-height: 675px;
+  object-fit: cover;
+}
