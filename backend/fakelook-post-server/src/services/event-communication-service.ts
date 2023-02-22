@@ -1,7 +1,6 @@
 import { connect, Channel } from "amqplib";
 let channel: Channel;
-const amqpServer =
-  "amqps://tmijedaz:trbSZmGtbG81P1YgQZ4ch4iL9vAfq82o@goose.rmq2.cloudamqp.com/tmijedaz";
+const amqpServer = process.env.AMQP_SERVER || "";
 
 export const createChannel = async () => {
   try {

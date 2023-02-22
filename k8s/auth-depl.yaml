@@ -23,7 +23,10 @@ spec:
             - name: DATA_BASE_URL
               value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/auth?retryWrites=true&w=majority"
             - name: TOKEN_SECRET
-              value: "veryverysecretkey"
+              valueFrom:
+                secretKeyRef:
+                  name: token-secret
+                  key: TOKEN_SECRET
           readinessProbe:
             httpGet:
               path: "/health-check"
