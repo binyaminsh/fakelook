@@ -19,8 +19,8 @@ app.use(urlencoded({ extended: true }));
 app.use(json());
 
 // routes
-app.use("/posts", postsRoutes);
-app.use("/post", postRoutes);
+app.use("/api/posts", postsRoutes);
+app.use("/api/post", postRoutes);
 app.all("*", () => {
   throw new NotFoundError();
 });

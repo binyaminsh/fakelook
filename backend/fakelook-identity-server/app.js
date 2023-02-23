@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use("/identity", identityRoutes);
+app.use("/api/identity", identityRoutes);
 app.use(errorHandler)
 
 const URL = process.env.URL_DB_CONECTION;

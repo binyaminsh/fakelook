@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // routes
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.all("*", () => {
   throw new NotFoundError();
 });

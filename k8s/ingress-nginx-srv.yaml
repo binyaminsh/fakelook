@@ -11,14 +11,14 @@ spec:
     - host: fakelook.net
       http:
         paths:
-          - path: /auth/?(.*)
+          - path: /api/auth/?(.*)
             pathType: Prefix
             backend:
               service:
                 name: auth-srv
                 port:
                   number: 5000
-          - path: /identity/?(.*)
+          - path: /api/identity/?(.*)
             pathType: Prefix
             backend:
               service:
@@ -26,7 +26,7 @@ spec:
                 port:
                   number: 5001
           # - path: /posts/?(.*)/comments
-          - path: /post/?(.*)
+          - path: /api/post/?(.*)
             pathType: Prefix
             backend:
               service:

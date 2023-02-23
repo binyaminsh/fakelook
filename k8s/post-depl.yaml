@@ -14,10 +14,13 @@ spec:
     spec:
       containers:
         - name: post
-          image: bshraib/fakelook-post:1.0.0
+          image: bshraib/fakelook-post:2.0
           env:
             - name: DATA_BASE_URL
-              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/post?retryWrites=true&w=majority"
+              valueFrom:
+                configMapKeyRef:
+                  name: db-urls-config
+                  key: POST_DB_URL
             - name: TOKEN_SECRET
               valueFrom:
                 secretKeyRef:
@@ -39,6 +42,13 @@ spec:
               port: 5002
             initialDelaySeconds: 10
             timeoutSeconds: 5
+          # resources:
+          #   limits:
+          #     cpu: "500m"
+          #     memory: "512Mi"
+          #   requests:
+          #     cpu: "250m"
+          #     memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service

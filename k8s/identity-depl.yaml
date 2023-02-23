@@ -14,12 +14,15 @@ spec:
     spec:
       containers:
         - name: identity
-          image: bshraib/fakelook-identity:1.0.0
+          image: bshraib/fakelook-identity:2.0
           env:
             - name: AUTH_SERVICE
               value: "https://auth-srv:5000"
             - name: URL_DB_CONECTION
-              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/identity?retryWrites=true&w=majority"
+              valueFrom:
+                configMapKeyRef:
+                  name: db-urls-config
+                  key: IDENTITY_DB_URL
             - name: TOKEN_SECRET
               valueFrom:
                 secretKeyRef:
@@ -36,6 +39,13 @@ spec:
               port: 5001
             initialDelaySeconds: 10
             timeoutSeconds: 5
+          # resources:
+          #   limits:
+          #     cpu: "500m"
+          #     memory: "512Mi"
+          #   requests:
+          #     cpu: "250m"
+          #     memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service
