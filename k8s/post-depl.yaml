@@ -14,22 +14,41 @@ spec:
     spec:
       containers:
         - name: post
-          image: bshraib/fakelook-post:1.0.0
+          image: bshraib/fakelook-post:2.0
           env:
             - name: DATA_BASE_URL
-              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/post?retryWrites=true&w=majority"
+              valueFrom:
+                configMapKeyRef:
+                  name: db-urls-config
+                  key: POST_DB_URL
             - name: TOKEN_SECRET
-              value: "veryverysecretkey"
-            - name: STORAGE_CONNECTION_STRING
-              value: "DefaultEndpointsProtocol=https;AccountName=fakelookstoragenew;AccountKey=592PvRcXFUM/aNxU8VaqsRWJbb3l15Vg5TPdX4K6EjCruPKGzP8x8oHl/NYWcah+jQc8set3Ux2T+AStBedNXQ==;EndpointSuffix=core.windows.net"
-            - name: STORAGE_URL
-              value: "https://fakelookstoragenew.blob.core.windows.net/public/"
+              valueFrom:
+                secretKeyRef:
+                  name: token-secret
+                  key: TOKEN_SECRET
+            - name: AMQP_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: message-broker
+                  key: AMQP_SERVER
+            - name: GCLOUD_STORAGE_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: storage-config
+                  key: GCLOUD_STORAGE_BUCKET
           readinessProbe:
             httpGet:
               path: "/health-check"
               port: 5002
             initialDelaySeconds: 10
             timeoutSeconds: 5
+          # resources:
+          #   limits:
+          #     cpu: "500m"
+          #     memory: "512Mi"
+          #   requests:
+          #     cpu: "250m"
+          #     memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service

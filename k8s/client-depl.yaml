@@ -14,7 +14,14 @@ spec:
     spec:
       containers:
         - name: client
-          image: bshraib/fakelook-frontend
+          image: bshraib/fakelook-frontend:2.0
+          # resources:
+          #   limits:
+          #     cpu: "500m"
+          #     memory: "512Mi"
+          #   requests:
+          #     cpu: "250m"
+          #     memory: "256Mi"
           env:
             - name: REACT_APP_GOOGLE_KEY
               value: "889021578009-t8fvpr0sjhh6vo93doo6136q9b4kmhot.apps.googleusercontent.com"
@@ -23,19 +30,19 @@ spec:
             - name: REACT_APP_GOOGLE_MAPS_API_KEY
               value: "AIzaSyDbVymsiMKubuNrmy_RbT4owOMia4Bifgk"
             - name: REACT_APP_AUTH_URL
-              value: "https://fakelook.net/auth"
+              value: "http://fakelook.net/api/auth"
             - name: REACT_APP_IDENTITY_URL
-              value: "https://fakelook.net/identity"
+              value: "http://fakelook.net/api/identity"
             - name: REACT_APP_POST_URL
-              value: "https://fakelook.net/post"
+              value: "http://fakelook.net/api/post"
             - name: REACT_APP_POSTS_URL
-              value: "https://fakelook.net/posts"
+              value: "http://fakelook.net/api/posts"
             - name: REACT_APP_FEED_SOCKET_URL
               value: "/feed"
             - name: REACT_APP_RESET_PASSWORD_URL
-              value: "https://fakelook.net/auth/requestResetPassword"
+              value: "http://fakelook.net/api/auth/requestResetPassword"
             - name: REACT_APP_IDENTITY_UPDATEUSER_URL
-              value: "https://fakelook.net/identity/updateUser"
+              value: "http://fakelook.net/api/identity/updateUser"
 ---
 apiVersion: v1
 kind: Service

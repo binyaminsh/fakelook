@@ -10,21 +10,21 @@ spec:
     - host: fakelook.net
       http:
         paths:
-          - path: /auth/*
+          - path: /api/auth/*
             pathType: ImplementationSpecific
             backend:
               service:
                 name: auth-srv
                 port:
                   number: 5000
-          - path: /identity/*
+          - path: /api/identity/*
             pathType: ImplementationSpecific
             backend:
               service:
                 name: identity-srv
                 port:
                   number: 5001
-          - path: /post/*
+          - path: /api/post/*
             pathType: ImplementationSpecific
             backend:
               service:

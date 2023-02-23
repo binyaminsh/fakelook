@@ -14,14 +14,25 @@ spec:
     spec:
       containers:
         - name: feed
-          image: bshraib/fakelook-feed
+          image: bshraib/fakelook-feed:2.0
           env:
+            - name: port
+              value: "5003"
             - name: DATA_BASE_URL
-              value: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/feed?retryWrites=true&w=majority"
+              valueFrom:
+                configMapKeyRef:
+                  name: db-urls-config
+                  key: FEED_DB_URL
             - name: TOKEN_SECRET
-              value: "veryverysecretkey"
+              valueFrom:
+                secretKeyRef:
+                  name: token-secret
+                  key: TOKEN_SECRET
             - name: AMQP_SERVER
-              value: "amqps://tmijedaz:trbSZmGtbG81P1YgQZ4ch4iL9vAfq82o@goose.rmq2.cloudamqp.com/tmijedaz"
+              valueFrom:
+                configMapKeyRef:
+                  name: message-broker
+                  key: AMQP_SERVER
             - name: "NODE_CONFIG_DIR"
               value: "/app/src/config/"
           readinessProbe:
@@ -30,6 +41,13 @@ spec:
               port: 5003
             initialDelaySeconds: 10
             timeoutSeconds: 5
+          # resources:
+          #   limits:
+          #     cpu: "500m"
+          #     memory: "512Mi"
+          #   requests:
+          #     cpu: "250m"
+          #     memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service
