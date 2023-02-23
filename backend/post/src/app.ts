@@ -22,6 +22,9 @@ app.use(urlencoded({ extended: true }));
 app.use(json());
 
 // routes
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
 app.use("/api/posts", postsRoutes);
 app.use("/api/post", postRoutes);
 app.all("*", () => {

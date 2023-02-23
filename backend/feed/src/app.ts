@@ -4,7 +4,7 @@ import { createServer } from "http";
 import * as dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
-process.env["NODE_CONFIG_DIR"] = __dirname + "/config/";
+//process.env["NODE_CONFIG_DIR"]  = __dirname + "/config/";
 import config from "config";
 import { json, urlencoded } from "body-parser";
 import dbConnection from "./config/db.config";
@@ -28,6 +28,9 @@ const httpServer = createServer(app);
 initSocketIo(httpServer, corsOrigin);
 
 // routes
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
 app.all("*", () => {
   throw new NotFoundError();
 });

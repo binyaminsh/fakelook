@@ -5,7 +5,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
-    # nginx.org/websocket-services: "feed-srv"
+    nginx.org/websocket-services: "feed-srv"
+    nginx.org/proxy-read-timeout: "3600"
 spec:
   rules:
     - host: fakelook.net
@@ -33,7 +34,7 @@ spec:
                 name: post-srv
                 port:
                   number: 5002
-          # - path: /feed/?(.*)
+          # - path: /feed
           #   pathType: Prefix
           #   backend:
           #     service:

@@ -36,19 +36,6 @@ spec:
                 configMapKeyRef:
                   name: storage-config
                   key: GCLOUD_STORAGE_BUCKET
-          readinessProbe:
-            httpGet:
-              path: "/health-check"
-              port: 5002
-            initialDelaySeconds: 10
-            timeoutSeconds: 5
-          # resources:
-          #   limits:
-          #     cpu: "500m"
-          #     memory: "512Mi"
-          #   requests:
-          #     cpu: "250m"
-          #     memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service
