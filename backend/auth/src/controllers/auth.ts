@@ -6,7 +6,7 @@ import { BadRequestError, NotFoundError } from "@bshfakelook/common";
 import { randomBytes } from "crypto";
 import axios from "axios";
 import { OAuth2Client } from "google-auth-library";
-import { sendMail } from "../utils/email/sendEmail";
+// import { sendMail } from "../utils/email/sendEmail";
 import { LoginResponseDto } from "../dtos/login-response.dto";
 
 const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -111,65 +111,65 @@ export const googleSigning = async (
   }
 };
 
-export const requestPasswordReset = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      throw new NotFoundError();
-    }
-    const resetToken = randomBytes(32).toString("hex");
-    const hashedResetToken = await hash(resetToken);
-    user.resetToken = hashedResetToken;
-    user.resetTokenExp = new Date(Date.now() + 3600000);
-    await user.save();
+// export const requestPasswordReset = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const user = await User.findOne({ email: req.body.email });
+//     if (!user) {
+//       throw new NotFoundError();
+//     }
+//     const resetToken = randomBytes(32).toString("hex");
+//     const hashedResetToken = await hash(resetToken);
+//     user.resetToken = hashedResetToken;
+//     user.resetTokenExp = new Date(Date.now() + 3600000);
+//     await user.save();
     
-    const link = `${process.env.PASSWORD_RESET_URL}/passwordReset?token=${resetToken}&id=${user._id}`;
-    await sendMail(
-      user.email,
-      "Reset password.",
-      `<p>You requested a password reset</p>
-       <p>Click this <a href=${link}>${link}</a> to set a new password.</p>`
-    );
-    return res.sendStatus(200);
-  } catch (error) {
-    next(error);
-  }
-};
+//     const link = `${process.env.PASSWORD_RESET_URL}/passwordReset?token=${resetToken}&id=${user._id}`;
+//     await sendMail(
+//       user.email,
+//       "Reset password.",
+//       `<p>You requested a password reset</p>
+//        <p>Click this <a href=${link}>${link}</a> to set a new password.</p>`
+//     );
+//     return res.sendStatus(200);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
-export const resetPassword = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { resetToken, newPassword, userId } = req.body;
-    const existUser = await User.findOne({
-      _id: userId,
-      resetTokenExp: { $gt: Date.now() },
-    });
-    if (!existUser?.resetToken) {
-      throw new BadRequestError("Invalid or expired password reset token.");
-    }
-    const isValid = await compare(resetToken, existUser.resetToken);
-    if (!isValid) {
-      throw new BadRequestError("Invalid or expired password reset token.");
-    }
-    const hashedNewPassword = await hash(newPassword);
-    existUser.password = hashedNewPassword;
-    existUser.resetToken = undefined;
-    existUser.resetTokenExp = undefined;
-    existUser.save();
-    sendMail(
-      existUser.email,
-      "Reset password successfully.",
-      `<p>your password updated successfully.</p>`
-    );
-    return res.sendStatus(204);
-  } catch (error) {
-    next(error);
-  }
-};
+// export const resetPassword = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const { resetToken, newPassword, userId } = req.body;
+//     const existUser = await User.findOne({
+//       _id: userId,
+//       resetTokenExp: { $gt: Date.now() },
+//     });
+//     if (!existUser?.resetToken) {
+//       throw new BadRequestError("Invalid or expired password reset token.");
+//     }
+//     const isValid = await compare(resetToken, existUser.resetToken);
+//     if (!isValid) {
+//       throw new BadRequestError("Invalid or expired password reset token.");
+//     }
+//     const hashedNewPassword = await hash(newPassword);
+//     existUser.password = hashedNewPassword;
+//     existUser.resetToken = undefined;
+//     existUser.resetTokenExp = undefined;
+//     existUser.save();
+//     sendMail(
+//       existUser.email,
+//       "Reset password successfully.",
+//       `<p>your password updated successfully.</p>`
+//     );
+//     return res.sendStatus(204);
+//   } catch (error) {
+//     next(error);
+//   }
+// };

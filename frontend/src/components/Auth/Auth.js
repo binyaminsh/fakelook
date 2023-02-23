@@ -7,7 +7,7 @@ import classes from "./Auth.module.css";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import useHttp from "../../hooks/use-http";
-import GoogleAuth from "./GoogleAuth";
+// import GoogleAuth from "./GoogleAuth";
 
 const authUrl = process.env.REACT_APP_AUTH_URL;
 const identityUrl = process.env.REACT_APP_IDENTITY_URL;
@@ -131,7 +131,7 @@ const Auth = () => {
         <hr />
       </div>
       <section className={classes.providers}>
-        <GoogleAuth onAuthResponse={authResponseHandler} />
+        {/* <GoogleAuth onAuthResponse={authResponseHandler} /> */}
       </section>
     </section>
   );

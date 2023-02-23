@@ -1,4 +1,5 @@
 import express from "express";
+import helmet from "helmet";
 import { createServer } from "http";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -18,6 +19,7 @@ const host = config.get<string>("host");
 const corsOrigin = config.get<string>("corsOrigin");
 
 const app = express();
+app.use(helmet());
 app.use(cors());
 app.use(urlencoded({ extended: true }));
 app.use(json());

@@ -4,8 +4,8 @@ import {
   signup,
   login,
   googleSigning,
-  requestPasswordReset,
-  resetPassword,
+  // requestPasswordReset,
+  // resetPassword,
 } from "../controllers/auth";
 import { validateRequest } from "@bshfakelook/common";
 
@@ -38,17 +38,17 @@ router.post(
 );
 
 router.post("/google", googleSigning);
-router.post("/requestResetPassword", requestPasswordReset);
-router.post(
-  "/resetPassword",
-  [
-    body("newPassword")
-      .trim()
-      .isLength({ max: 30, min: 6 })
-      .withMessage("Password must be between 6 and 30 characters"),
-  ],
-  validateRequest,
-  resetPassword
-);
+// router.post("/requestResetPassword", requestPasswordReset);
+// router.post(
+//   "/resetPassword",
+//   [
+//     body("newPassword")
+//       .trim()
+//       .isLength({ max: 30, min: 6 })
+//       .withMessage("Password must be between 6 and 30 characters"),
+//   ],
+//   validateRequest,
+//   resetPassword
+// );
 
 export = router;

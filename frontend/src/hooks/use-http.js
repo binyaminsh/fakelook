@@ -16,7 +16,8 @@ const useHttp = () => {
         headers: requestConfig.headers ? requestConfig.headers : {},
         data: requestConfig.body ? requestConfig.body : null,
       });
-
+      
+      console.log(response);
       setStatusCode(response.status);
       if (response.data && dataHandler) {
         dataHandler(response.data);

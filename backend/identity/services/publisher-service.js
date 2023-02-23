@@ -1,7 +1,7 @@
-const { connect} = require("amqplib");
+const { connect } = require("amqplib");
 let channel;
 const amqpServer = process.env.AMQP_SERVER || "";
-  
+
 const createChannel = async () => {
   try {
     const connection = await connect(amqpServer);
@@ -21,4 +21,3 @@ exports.publishMessage = async (queueName, message) => {
 
   channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)));
 };
-

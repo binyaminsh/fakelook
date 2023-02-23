@@ -64,7 +64,6 @@ exports.createUser = async (req, res, next) => {
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
-
     const userDetails = { ...req.body };
 
     const url = `${process.env.AUTH_SERVICE_URL}/auth/signup`;
@@ -74,7 +73,6 @@ exports.createUser = async (req, res, next) => {
       username: userDetails.username,
     };
     const response = await axios.post(url, payload);
-
     const { userId } = response.data;
 
     // TODO: Calculate age with date-fns differenceInYears method before saving to db
