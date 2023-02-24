@@ -19,7 +19,7 @@
     "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
-    "@bshfakelook/common": "^1.0.4",
+    "@bshfakelook/common": "^1.0.5",
     "amqplib": "^0.10.3",
     "body-parser": "^1.20.2",
     "config": "^3.3.9",
