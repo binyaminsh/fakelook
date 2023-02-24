@@ -18,7 +18,11 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // routes
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
 app.use("/api/auth", authRoutes);
+
 app.all("*", () => {
   throw new NotFoundError();
 });

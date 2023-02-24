@@ -16,8 +16,6 @@ spec:
         - name: feed
           image: bshraib/fakelook-feed:2.0
           env:
-            - name: port
-              value: "5003"
             - name: DATA_BASE_URL
               valueFrom:
                 configMapKeyRef:
@@ -37,10 +35,23 @@ spec:
               value: "/app/src/config/"
           readinessProbe:
             httpGet:
-              path: "/health-check"
+              path: /healthz
               port: 5003
             initialDelaySeconds: 10
             timeoutSeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5003
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 5003
+            failureThreshold: 30
+            periodSeconds: 10
           # resources:
           #   limits:
           #     cpu: "500m"

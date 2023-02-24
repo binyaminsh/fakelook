@@ -15,6 +15,9 @@ app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
 app.use("/api/identity", identityRoutes);
 app.use(errorHandler)
 
