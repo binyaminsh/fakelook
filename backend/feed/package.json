@@ -1,11 +1,11 @@
 {
-  "name": "fakelook-feed-server",
+  "name": "app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "npx rimraf dist/* && tsc",
-    "start": "node dist/app.js",
+    "start": "node dist/src/app.js",
     "start:dev": "ts-node-dev src/app.ts"
   },
   "devDependencies": {

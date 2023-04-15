@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import ForgotPassword from "./ForgotPassword";
+import env from 'react-dotenv'
 
 import classes from "./Auth.module.css";
 import LoginForm from "./LoginForm";
@@ -9,8 +10,10 @@ import SignUpForm from "./SignUpForm";
 import useHttp from "../../hooks/use-http";
 // import GoogleAuth from "./GoogleAuth";
 
-const authUrl = process.env.REACT_APP_AUTH_URL;
-const identityUrl = process.env.REACT_APP_IDENTITY_URL;
+// const authUrl = process.env.REACT_APP_AUTH_URL;
+// const identityUrl = process.env.REACT_APP_IDENTITY_URL;
+const authUrl = env.REACT_APP_AUTH_URL;
+const identityUrl = env.REACT_APP_IDENTITY_URL;
 
 const Auth = () => {
   const { error, isLoading, sendRequest: sendAuthRequest } = useHttp();

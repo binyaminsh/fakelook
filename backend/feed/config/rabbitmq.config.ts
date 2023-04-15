@@ -1,6 +1,6 @@
 import { connect, Channel } from "amqplib";
-import { consumePostMessage } from "../consumers/post-message-consumer";
-import { consumeUserMessage } from "../consumers/user-message-consumer";
+import { consumePostMessage } from "../src/consumers/post-message-consumer";
+import { consumeUserMessage } from "../src/consumers/user-message-consumer";
 let channel: Channel;
 
 const amqpServer = process.env.AMQP_SERVER || "";

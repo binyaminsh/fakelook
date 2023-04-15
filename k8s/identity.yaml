@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-deployment
+  labels:
+    app: identity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity
+  template:
+    metadata:
+      labels:
+        app: identity
+    spec:
+      containers:
+        - name: identity
+          image: mendelovic/fakelook-identity
+          ports:
+            - containerPort: 5001
+          env:
+            - name: AUTH_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: fakelook-configmap
+                  key: auth_url
+            - name: URL_DB_CONECTION
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: identity_db_url
+            - name: TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: fakelook-secret
+                  key: acces_token_key
+            - name: AMQP_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: fakelook-secret
+                  key: amqp_server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-service
+spec:
+  selector:
+    app: identity
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+      nodePort: 30001

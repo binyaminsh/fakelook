@@ -7,6 +7,7 @@ import AuthContext from "../../../store/auth-context";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserGeolocation } from "../../../store/geolocation-actions";
 import classes from "./NewPost.module.css";
+import env from "react-dotenv";
 
 const NewPost = ({ onModalClosed }) => {
   const { error, isLoading, sendRequest: sendNewPostRequest } = useHttp();
@@ -54,7 +55,8 @@ const NewPost = ({ onModalClosed }) => {
     formData.append("tags", JSON.stringify(tags));
     formData.append("userTags", JSON.stringify(taggedUsers));
 
-    const postUrl = process.env.REACT_APP_POST_URL;
+    // const postUrl = process.env.REACT_APP_POST_URL;
+    const postUrl = env.REACT_APP_POST_URL;
 
     await sendNewPostRequest(
       {

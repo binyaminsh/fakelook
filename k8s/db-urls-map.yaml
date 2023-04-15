@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: db-urls-config
-data:
-  AUTH_DB_URL: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/auth?retryWrites=true&w=majority"
-  IDENTITY_DB_URL: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/identity?retryWrites=true&w=majority"
-  POST_DB_URL: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/post?retryWrites=true&w=majority"
-  FEED_DB_URL: "mongodb+srv://mendelovic:4q1BNOBedWBmCK4l@cluster0.98xpy3o.mongodb.net/feed?retryWrites=true&w=majority"

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-deployment
+  labels:
+    app: feed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feed
+  template:
+    metadata:
+      labels:
+        app: feed
+    spec:
+      containers:
+        - name: feed
+          image: mendelovic/fakelook-feed
+          ports:
+            - containerPort: 5003
+          env:
+            - name: DATA_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: feed_db_url
+            - name: TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: fakelook-secret
+                  key: acces_token_key
+            - name: AMQP_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: fakelook-secret
+                  key: amqp_server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-service
+spec:
+  selector:
+    app: feed
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5003
+      targetPort: 5003
+      nodePort: 30003

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-deployment
+  labels:
+    app: react
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+        - name: react
+          image: mendelovic/fakelook-react
+          ports:
+            - containerPort: 80
+          args:
+            - sh
+            - -c
+            - |
+              sed -i "s|__ath__|$REACT_APP_AUTH_URL|g" /usr/share/nginx/html/env.js;
+              sed -i "s|__idn__|$REACT_APP_IDENTITY_URL|g" /usr/share/nginx/html/env.js;
+              sed -i "s|__pst__|$REACT_APP_POST_URL|g" /usr/share/nginx/html/env.js;
+              sed -i "s|__psts__|$REACT_APP_POSTS_URL|g" /usr/share/nginx/html/env.js;
+              sed -i "s|__fed__|$REACT_APP_FEED_SOCKET_URL|g" /usr/share/nginx/html/env.js;
+              sed -i "s|__idnupd__|$REACT_APP_IDENTITY_UPDATEUSER_URL|g" /usr/share/nginx/html/env.js;
+              nginx -g 'daemon off;'
+          envFrom:
+            - configMapRef:
+                name: react-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-service
+spec:
+  selector:
+    app: react
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30004

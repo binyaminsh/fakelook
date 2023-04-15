@@ -1,8 +1,9 @@
 import express from "express";
 import compression from "compression";
 import helmet from "helmet";
-import * as dotenv from "dotenv";
-dotenv.config();
+// In development only.
+// import * as dotenv from "dotenv";
+// dotenv.config();
 import cors from "cors";
 import bodyParser from "body-parser";
 import dbConnection from "./config/db.config";
@@ -18,8 +19,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // routes
-app.get('/healthz', (req, res) => {
-  res.status(200).send('OK');
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
 });
 app.use("/api/auth", authRoutes);
 

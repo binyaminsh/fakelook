@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import useHttp from "../../hooks/use-http";
 import useInput from "../../hooks/use-input";
 import classes from "./Auth.module.css";
+import env from "react-dotenv";
 
 const ForgotPassword = (props) => {
   const {
@@ -27,8 +28,8 @@ const ForgotPassword = (props) => {
 
     if (!isEmailValid) return;
 
-    // const resetUrl = "http://localhost:5000/auth/requestResetPassword";
-    const resetUrl = process.env.REACT_APP_RESET_PASSWORD_URL;
+    // const resetUrl = process.env.REACT_APP_RESET_PASSWORD_URL;
+    const resetUrl = env.REACT_APP_RESET_PASSWORD_URL;
 
     await sendResetRequest({
       url: resetUrl,

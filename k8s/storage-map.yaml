@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: storage-config
-data:
-  GCLOUD_STORAGE_BUCKET: "fakelook_storage"

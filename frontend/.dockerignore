@@ -1,1 +1,9 @@
+# Ignore git related files
+.git
+.gitignore
+
+# Ignore node_modules and package-lock.json
 node_modules
+
+# Ignore any local build files
+# build 

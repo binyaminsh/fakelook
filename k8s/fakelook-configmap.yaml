@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fakelook-configmap
+data:
+  auth_url: http://auth-service:5000/api
+  identity_url: http://identity-service:5001/api
+  google_storage: fakelook_storage

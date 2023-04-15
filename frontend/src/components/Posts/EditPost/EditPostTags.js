@@ -6,6 +6,7 @@ import LoadingSpinner from "../../UI/LoadingSpinner";
 import Mention from "../../UI/Mention";
 import Tags from "../../UI/Tags";
 import classes from "./EditPostTags.module.css";
+import env from "react-dotenv";
 
 const EditPostTags = ({ post, onCloseEdit, isComment = false }) => {
   const [tags, setTags] = useState([...post.tags.hashTags]);
@@ -55,7 +56,8 @@ const EditPostTags = ({ post, onCloseEdit, isComment = false }) => {
     //   url = `${process.env.REACT_APP_POST_URL}/${post.id}`;
     // }
 
-    const postUrl = `${process.env.REACT_APP_POST_URL}/${post.id}`;
+    // const postUrl = `${process.env.REACT_APP_POST_URL}/${post.id}`;
+    const postUrl = `${env.REACT_APP_POST_URL}/${post.id}`;
 
     let description = post.content;
     taggedUsers.forEach((mention) => {

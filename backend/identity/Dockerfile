@@ -1,14 +1,19 @@
 FROM node:alpine
 
+# Set the working directory to /app
 WORKDIR /app
 
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-RUN npm install
+# Install app dependencies
+RUN npm install --only=production
 
-COPY . ./
+# Copy the rest of the app files to the working directory
+COPY . .
 
+# Expose port 5001
 EXPOSE 5001
 
-CMD ["npm", "start"]
-
+# Start the app
+CMD [ "npm", "start" ]

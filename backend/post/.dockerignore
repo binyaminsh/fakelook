@@ -1,1 +1,9 @@
 node_modules
+npm-debug.log
+.dockerignore
+.docker
+.git
+.gitignore
+*.env
+*.ts
+*.map

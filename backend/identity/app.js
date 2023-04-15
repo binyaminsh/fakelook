@@ -1,7 +1,8 @@
 const express = require("express");
 const compression = require("compression");
 const helmet = require("helmet");
-require("dotenv").config();
+// In development only.
+// require("dotenv").config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -15,11 +16,11 @@ app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/healthz', (req, res) => {
-  res.status(200).send('OK');
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
 });
 app.use("/api/identity", identityRoutes);
-app.use(errorHandler)
+app.use(errorHandler);
 
 const URL = process.env.URL_DB_CONECTION;
 mongoose

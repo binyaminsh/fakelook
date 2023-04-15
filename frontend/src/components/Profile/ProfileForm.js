@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import classes from "./ProfileForm.module.css";
 import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/use-http";
+import env from "react-dotenv";
 
 const ProfileForm = (props) => {
 
@@ -27,8 +28,8 @@ const ProfileForm = (props) => {
         if (Validation(name)) {
             await SendUpdatedUserDetails(
                 {
-                    // url: `http://localhost:5001/identity/updateUser/${currentUser._id}`,
-                    url: `${process.env.REACT_APP_IDENTITY_UPDATEUSER_URL}/${currentUser._id}`,
+                    // url: `${process.env.REACT_APP_IDENTITY_UPDATEUSER_URL}/${currentUser._id}`,
+                    url: `${env.REACT_APP_IDENTITY_UPDATEUSER_URL}/${currentUser._id}`,
                     method: "PUT",
                     body: { ...updatedUser },
                     headers: { "Content-Type": "application/json" },

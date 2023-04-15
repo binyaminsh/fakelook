@@ -1,7 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: post-depl
+  name: post-deployment
+  labels:
+    app: post
 spec:
   replicas: 1
   selector:
@@ -14,38 +16,41 @@ spec:
     spec:
       containers:
         - name: post
-          image: bshraib/fakelook-post:2.0
+          image: mendelovic/fakelook-post
+          ports:
+            - containerPort: 5002
           env:
             - name: DATA_BASE_URL
               valueFrom:
-                configMapKeyRef:
-                  name: db-urls-config
-                  key: POST_DB_URL
+                secretKeyRef:
+                  name: database-secret
+                  key: post_db_url
             - name: TOKEN_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: token-secret
-                  key: TOKEN_SECRET
+                  name: fakelook-secret
+                  key: acces_token_key
             - name: AMQP_SERVER
               valueFrom:
-                configMapKeyRef:
-                  name: message-broker
-                  key: AMQP_SERVER
+                secretKeyRef:
+                  name: fakelook-secret
+                  key: amqp_server
             - name: GCLOUD_STORAGE_BUCKET
               valueFrom:
                 configMapKeyRef:
-                  name: storage-config
-                  key: GCLOUD_STORAGE_BUCKET
+                  name: fakelook-configmap
+                  key: google_storage
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: post-srv
+  name: post-service
 spec:
   selector:
     app: post
+  type: LoadBalancer
   ports:
-    - name: post
-      protocol: TCP
+    - protocol: TCP
       port: 5002
       targetPort: 5002
+      nodePort: 30002

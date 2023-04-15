@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  auth:
+    hostname: auth
+    container_name: auth
+    image: mendelovic/fakelook-auth
+    ports:
+      - "5000:5000"
+    environment:
+      - DATA_BASE_URL=mongodb+srv://username:password@cluster0.98xpy3o.mongodb.net/auth?retryWrites=true&w=majority
+      - TOKEN_SECRET=veryverysecretkey
+      # - REFRESH_TOKEN_SECRET=some-secret-refresh-token
+      # - REFRESH_TOKEN_EXPIRES_IN=86400
+      - ACCESS_TOKEN_EXPIRES_IN=3600
+      - IDENTITY_SERVICE=http://identity:5001/api
+      # - PASSWORD_RESET_URL=http://react:3000/passwordReset
+      # - GOOGLE_CLIENT_ID=889021578009-t8fvpr0sjhh6vo93doo6136q9b4kmhot.apps.googleusercontent.com
+
+  identity:
+    hostname: identity
+    container_name: identity
+    image: mendelovic/fakelook-identity
+    ports:
+      - "5001:5001"
+    environment:
+      - URL_DB_CONECTION=mongodb+srv://username:password@cluster0.98xpy3o.mongodb.net/identity?retryWrites=true&w=majority
+      - TOKEN_SECRET=veryverysecretkey
+      - AUTH_SERVICE_URL=http://auth:5000/api
+      - AMQP_SERVER=amqps://tmijedaz:trbSZmGtbG81P1YgQZ4ch4iL9vAfq82o@goose.rmq2.cloudamqp.com/tmijedaz
+
+  post:
+    hostname: post
+    container_name: post
+    image: mendelovic/fakelook-post
+    ports:
+      - "5002:5002"
+    environment:
+      - DATA_BASE_URL=mongodb+srv://username:password@cluster0.98xpy3o.mongodb.net/post?retryWrites=true&w=majority
+      - TOKEN_SECRET=veryverysecretkey
+      - GCLOUD_STORAGE_BUCKET=fakelook_storage
+      - AMQP_SERVER=amqps://tmijedaz:trbSZmGtbG81P1YgQZ4ch4iL9vAfq82o@goose.rmq2.cloudamqp.com/tmijedaz
+
+  feed:
+    hostname: feed
+    container_name: feed
+    image: mendelovic/fakelook-feed
+    ports:
+      - "5003:5003"
+    environment:
+      - DATA_BASE_URL=mongodb+srv://username:password@cluster0.98xpy3o.mongodb.net/feed?retryWrites=true&w=majority
+      - TOKEN_SECRET=veryverysecretkey
+      - AMQP_SERVER=amqps://tmijedaz:trbSZmGtbG81P1YgQZ4ch4iL9vAfq82o@goose.rmq2.cloudamqp.com/tmijedaz
+
+  react:
+    hostname: react
+    container_name: react
+    image: mendelovic/fakelook-react
+    ports:
+      - "80:80"

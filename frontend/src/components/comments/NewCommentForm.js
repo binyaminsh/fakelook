@@ -4,6 +4,7 @@ import Tags from "../UI/Tags";
 import Mention from "../UI/Mention";
 import useMention from "../../hooks/use-mention";
 import AuthContext from "../../store/auth-context";
+import env from "react-dotenv";
 
 const NewCommentForm = ({ postId, onAddedComment }) => {
   const [tags, setTags] = useState([]);
@@ -26,7 +27,9 @@ const NewCommentForm = ({ postId, onAddedComment }) => {
 
     if (newComment.trim().length === 0) return;
 
-    const commentUrl = `${process.env.REACT_APP_POST_URL}/comment/${postId}`;
+    // const commentUrl = `${process.env.REACT_APP_POST_URL}/comment/${postId}`;
+    const commentUrl = `${env.REACT_APP_POST_URL}/comment/${postId}`;
+
     const payload = {
       userId: authCtx.currentUser._id,
       content: newComment,
